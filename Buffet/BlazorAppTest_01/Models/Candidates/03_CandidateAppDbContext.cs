@@ -14,8 +14,5 @@ namespace BlazorAppTest_01.Models.Candidates
         {
                 
         }
-
-        public DbSet<Candidate> Candidates { get; set; } = null!;
-
     }
 }

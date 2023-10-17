@@ -41,20 +41,6 @@ namespace BlazorAppTest_01.Data.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Broths");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            IsVegan = true,
-                            Name = "콩국물"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            IsVegan = false,
-                            Name = "멸치국물"
-                        });
                 });
 
             modelBuilder.Entity("Hawaso.Models.Buffets.Garnish", b =>
@@ -102,20 +88,6 @@ namespace BlazorAppTest_01.Data.Migrations
                     b.HasIndex("BrothId");
 
                     b.ToTable("Noodles");
-
-                    b.HasData(
-                        new
-                        {
-                            Id = 1,
-                            BrothId = 1,
-                            Name = "콩국수"
-                        },
-                        new
-                        {
-                            Id = 2,
-                            BrothId = 2,
-                            Name = "잔치국수"
-                        });
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
