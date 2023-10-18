@@ -1,7 +1,7 @@
 using BlazorAppTest_01.Areas.Identity;
 using BlazorAppTest_01.Data;
 using BlazorAppTest_01.Models.Candidates;
-using Hawaso.Models.Candidates;
+using BlazorAppTest_01.Models.Candidates;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

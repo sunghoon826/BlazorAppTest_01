@@ -1,6 +1,6 @@
 ﻿using BlazorAppTest_01.Models.Candidates;
 
-namespace Hawaso.Models.Candidates;
+namespace BlazorAppTest_01.Models.Candidates;
 
 public static class CandidateDbInitializer
 {

@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Hawaso.Models.Buffets;
+namespace BlazorAppTest_01.Models.Buffets;
 
 /// <summary>
 /// 국수

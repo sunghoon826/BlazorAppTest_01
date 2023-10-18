@@ -25,7 +25,7 @@ namespace BlazorAppTest_01.Data.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
-            modelBuilder.Entity("Hawaso.Models.Buffets.Broth", b =>
+            modelBuilder.Entity("BlazorAppTest_01.Models.Buffets.Broth", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -46,7 +46,7 @@ namespace BlazorAppTest_01.Data.Migrations
                     b.ToTable("Broths");
                 });
 
-            modelBuilder.Entity("Hawaso.Models.Buffets.Garnish", b =>
+            modelBuilder.Entity("BlazorAppTest_01.Models.Buffets.Garnish", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -69,7 +69,7 @@ namespace BlazorAppTest_01.Data.Migrations
                     b.ToTable("Garnishes");
                 });
 
-            modelBuilder.Entity("Hawaso.Models.Buffets.Noodle", b =>
+            modelBuilder.Entity("BlazorAppTest_01.Models.Buffets.Noodle", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -295,18 +295,18 @@ namespace BlazorAppTest_01.Data.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("Hawaso.Models.Buffets.Garnish", b =>
+            modelBuilder.Entity("BlazorAppTest_01.Models.Buffets.Garnish", b =>
                 {
-                    b.HasOne("Hawaso.Models.Buffets.Noodle", "Noodle")
+                    b.HasOne("BlazorAppTest_01.Models.Buffets.Noodle", "Noodle")
                         .WithMany()
                         .HasForeignKey("NoodleId");
 
                     b.Navigation("Noodle");
                 });
 
-            modelBuilder.Entity("Hawaso.Models.Buffets.Noodle", b =>
+            modelBuilder.Entity("BlazorAppTest_01.Models.Buffets.Noodle", b =>
                 {
-                    b.HasOne("Hawaso.Models.Buffets.Broth", "Broth")
+                    b.HasOne("BlazorAppTest_01.Models.Buffets.Broth", "Broth")
                         .WithMany("Noodles")
                         .HasForeignKey("BrothId")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -366,7 +366,7 @@ namespace BlazorAppTest_01.Data.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Hawaso.Models.Buffets.Broth", b =>
+            modelBuilder.Entity("BlazorAppTest_01.Models.Buffets.Broth", b =>
                 {
                     b.Navigation("Noodles");
                 });

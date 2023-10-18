@@ -1,4 +1,4 @@
-﻿using Hawaso.Models.Buffets;
+﻿using BlazorAppTest_01.Models.Buffets;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
