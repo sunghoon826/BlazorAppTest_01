@@ -4,6 +4,7 @@ using BlazorAppTest_01.Models.Candidates;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BlazorAppTest_01.Migrations
 {
     [DbContext(typeof(CandidateAppDbContext))]
-    partial class CandidateAppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231020073629_CandidatesNames")]
+    partial class CandidatesNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
