@@ -1,9 +1,13 @@
 using BlazorAppTest_01.Areas.Identity;
+using BlazorAppTest_01.Areas.Identity.Models;
+using BlazorAppTest_01.Areas.Identity.Services;
 using BlazorAppTest_01.Data;
 using BlazorAppTest_01.Models.Candidates;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,24 +16,32 @@ var connectionString = builder.Configuration.GetConnectionString("DefaultConnect
 builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(connectionString));
 
-//»õ·Î¿î DbContext Ãß°¡
+
+//ï¿½ï¿½ï¿½Î¿ï¿½ DbContext ï¿½ß°ï¿½
 //builder.Services.AddDbContext<CandidateAppDbContext>(options =>
 //    options.UseSqlServer(connectionString));
 builder.Services.AddDbContextFactory<CandidateAppDbContext>(options =>
     options.UseSqlServer(connectionString)); 
 
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
-builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ApplicationDbContext>();
+//builder.Services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+//    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+builder.Services.AddIdentity<ApplicationUser, ApplicationRole>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddControllersWithViews();
-builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<IdentityUser>>();
+builder.Services.AddScoped<AuthenticationStateProvider, RevalidatingIdentityAuthenticationStateProvider<ApplicationUser>>();
 builder.Services.AddSingleton<WeatherForecastService>();
+
+// ï¿½ï¿½ï¿½Ó¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
+builder.Services.AddTransient<IEmailSender, EmailSender>();
 
 var app = builder.Build();
 
-// °³¹ß È¯°æ¿¡¼­ Update-Database, Seed µ¥ÀÌÅÍ Ãß°¡
+// ï¿½ï¿½ï¿½ï¿½ È¯ï¿½æ¿¡ï¿½ï¿½ Update-Database, Seed ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
 if (app.Environment.IsDevelopment())
 {
     await CheckCandidateDbMigrated(app.Services);
@@ -68,8 +80,8 @@ app.MapFallbackToPage("/_Host");
 
 app.Run();
 
-#region CandidateSeedData: Candidates Å×ÀÌºí¿¡ ±âº» µ¥ÀÌÅÍ ÀÔ·Â
-// Candidates Å×ÀÌºí¿¡ ±âº» µ¥ÀÌÅÍ ÀÔ·Â
+#region CandidateSeedData: Candidates ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
+// Candidates ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½âº» ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
 static void CandidateSeedData(WebApplication app)
 {
     // https://docs.microsoft.com/ko-kr/aspnet/core/fundamentals/dependency-injection?view=aspnetcore-6.0#resolve-a-service-at-app-start-up
@@ -79,13 +91,13 @@ static void CandidateSeedData(WebApplication app)
 
         var candidateDbContext = services.GetRequiredService<CandidateAppDbContext>();
 
-        // Candidates Å×ÀÌºí¿¡ µ¥ÀÌÅÍ°¡ ¾øÀ» ¶§¿¡¸¸ µ¥ÀÌÅÍ ÀÔ·Â
+        // Candidates ï¿½ï¿½ï¿½Ìºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô·ï¿½
         if (!candidateDbContext.Candidates.Any())
         {
             candidateDbContext.Candidates.Add(
-                new Candidate { FirstName = "±æµ¿", LastName = "È«", IsEnrollment = false });
+                new Candidate { FirstName = "ï¿½æµ¿", LastName = "È«", IsEnrollment = false });
             candidateDbContext.Candidates.Add(
-                new Candidate { FirstName = "µÎ»ê", LastName = "¹é", IsEnrollment = false });
+                new Candidate { FirstName = "ï¿½Î»ï¿½", LastName = "ï¿½ï¿½", IsEnrollment = false });
 
             candidateDbContext.SaveChanges();
         }
@@ -93,8 +105,8 @@ static void CandidateSeedData(WebApplication app)
 }
 #endregion
 
-#region CheckCandidateDbMigrated: µ¥ÀÌÅÍº£ÀÌ½º ¸¶ÀÌ±×·¹ÀÌ¼Ç ÁøÇà
-// µ¥ÀÌÅÍº£ÀÌ½º ¸¶ÀÌ±×·¹ÀÌ¼Ç ÁøÇà
+#region CheckCandidateDbMigrated: ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½Ì±×·ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+// ï¿½ï¿½ï¿½ï¿½ï¿½Íºï¿½ï¿½Ì½ï¿½ ï¿½ï¿½ï¿½Ì±×·ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½
 async Task CheckCandidateDbMigrated(IServiceProvider services)
 {
     using var scope = services.CreateScope();

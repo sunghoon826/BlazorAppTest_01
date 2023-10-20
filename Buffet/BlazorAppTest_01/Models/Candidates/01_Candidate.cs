@@ -19,6 +19,9 @@ namespace BlazorAppTest_01.Models.Candidates
 
         public bool IsEnrollment { get; set; }
 
+        [Timestamp] // rowversion
+        public byte[]? ConcurrencyToken { get; set; }
+
     }
     public class Candidate : CandidateBase
     {

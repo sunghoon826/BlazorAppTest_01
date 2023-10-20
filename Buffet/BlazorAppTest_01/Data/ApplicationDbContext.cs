@@ -1,10 +1,12 @@
-﻿using BlazorAppTest_01.Models.Buffets;
+﻿using BlazorAppTest_01.Areas.Identity.Models;
+using BlazorAppTest_01.Models.Buffets;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace BlazorAppTest_01.Data
 {
-    public class ApplicationDbContext : IdentityDbContext
+    public class ApplicationDbContext
+        : IdentityDbContext<ApplicationUser, ApplicationRole, string>
     {
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
