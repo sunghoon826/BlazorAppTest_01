@@ -4,8 +4,8 @@
 
 @using BlazorAppTest_01.Models.Candidates
 @using Microsoft.EntityFrameworkCore
-@*@inject CandidateAppDbContext _Context*@
-@inject IDbContextFactory<CandidateAppDbContext> _ContextFactory
+@*@inject CandidateAppDbContext _Context*@  @* 주입해서 쓰던것을 DbContextFactory로 전환 *@
+@inject IDbContextFactory<CandidateAppDbContext> _ContextFactory 
 @inject NavigationManager NavigationManagerInjector
 
 @using Microsoft.AspNetCore.Components.Server.ProtectedBrowserStorage
@@ -15,7 +15,7 @@
 
 <PageTitle>Candidate List</PageTitle>
 
-<h1>Index</h1>
+<h1>Candidate List</h1>  @*  MVC 자동 Scaffolding 기능으로 CRUD를 자동 생성후 HTML Copy *@
 
 <p>
     <a href="/Candidates/Create">Create New</a>

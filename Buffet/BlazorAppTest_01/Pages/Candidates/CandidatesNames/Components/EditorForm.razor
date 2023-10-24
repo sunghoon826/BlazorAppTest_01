@@ -12,21 +12,21 @@
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label class="control-label" for="txtFirstName">FirstName</label>
+                  @*   <label class="control-label" for="txtFirstName">FirstName</label> *@
                     <InputText @bind-Value="Model.FirstName" id="txtFirstName" class="form-control" placeholder="Enter FirstName" />
                     <ValidationMessage For="() => Model.FirstName" />
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="form-group">
-                    <label class="control-label" for="txtLastName">LastName</label>
+                @*     <label class="control-label" for="txtLastName">LastName</label> *@
                     <InputText @bind-Value="Model.LastName" id="txtLastName" class="form-control" placeholder="Enter LastName" />
                     <ValidationMessage For="@(() => Model.LastName)"></ValidationMessage>
                 </div>
             </div>
             <div class="col-md-3">
                 <div class="form-group">
-                    <label class="control-label" for="txtMiddleName">MiddleName</label>
+                @*     <label class="control-label" for="txtMiddleName">MiddleName</label> *@
                     <InputText @bind-Value="Model.MiddleName" id="txtMiddleName" class="form-control" placeholder="Enter MiddleName" />
                     <ValidationMessage For="@(() => Model.MiddleName)"></ValidationMessage>
                 </div>
