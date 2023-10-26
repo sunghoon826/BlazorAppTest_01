@@ -67,7 +67,7 @@
     {
         if (OnSubmitCallback.HasDelegate)
         {
-            await OnSubmitCallback.InvokeAsync(true);
+            await OnSubmitCallback.InvokeAsync(true);  // 유효성 통과시 true
         }
     }
 
@@ -75,7 +75,7 @@
     {
         if (OnSubmitCallback.HasDelegate)
         {
-            await OnSubmitCallback.InvokeAsync(false);
+            await OnSubmitCallback.InvokeAsync(false); //유효성 통과X false
         }
     }
 

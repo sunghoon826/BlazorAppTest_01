@@ -1,6 +1,7 @@
 ﻿@page "/Candidates/{Page:int?}"
 @page "/Candidates/Index/{Page:int?}"
-@page "/Candidates/List/{Page:int?}"
+@page "/Candidates/List/{Page:int?}"  
+@* 페이지 넘버로 파라미터를 전달받음 *@
 
 @using BlazorAppTest_01.Models.Candidates
 @using Microsoft.EntityFrameworkCore
@@ -66,17 +67,17 @@ else
     </table>
 
     <ul class="pagination">
-        <li class="page-item @((Page == 1) ? "disabled" : "")">
-            <a class="page-link" href="/Candidates/@(Page - 1)">Prev</a>
+        <li class="page-item @((Page == 1) ? "disabled" : "")"> @* 페이지가 1페이지가 됐을때는 disabled *@
+            <a class="page-link" href="/Candidates/@(Page - 1)">Prev</a> @* 이전 버튼을 누르면 전 페이지로 이동 *@
         </li>
         @for (int i = 0; i < PageCount; i++)
         {
             <li class="page-item @((i == PageIndex) ? "active" : "")">
-                <a class="page-link" href="/Candidates/@(i + 1)">@(i + 1)</a>
+                <a class="page-link" href="/Candidates/@(i + 1)">@(i + 1)</a>  @* 페이지의 수 만큼 페이지 버튼을 생성 *@
             </li>
         }
-        <li class="page-item @((Page == PageCount) ? "disabled" : "")">
-            <a class="page-link" href="/Candidates/@(Page + 1)">Next</a>
+        <li class="page-item @((Page == PageCount) ? "disabled" : "")"> @* 현재 페이지가 마지막페이지와 같으면 disabled *@
+            <a class="page-link" href="/Candidates/@(Page + 1)">Next</a> @* 다음 페이지 버튼 *@
         </li>
     </ul>
 }
@@ -94,7 +95,7 @@ else
     /// 페이지 번호: 현재 보여줄 페이지 번호: 1 페이지, 2 페이지, ...
     /// </summary>
     [Parameter]
-    public int? Page { get; set; } // PageNumber
+    public int? Page { get; set; } // PageNumber를 저장
 
     /// <summary>
     /// 페이지 인덱스: 현재 보여줄 페이지 번호의 인덱스(PageNumber - 1)
@@ -118,7 +119,7 @@ else
 
     private async Task DisplayData()
     {
-        if (Page is null or < 1)
+        if (Page is null or < 1) // < 1 : 0이나 마이너스 값이 들어올때 에러 방지
         {
             //Page = 1;
             NavigationManagerInjector.NavigateTo("/Candidates/Index/1");
@@ -139,16 +140,16 @@ else
             PageCount =1;
         }
 
-        if (Page > PageCount)
+        if (Page > PageCount) // PageCount 보다 Page가 큰 값이 들어오면 마지막 페이지인 PageCount를 보여줌
         {
             NavigationManagerInjector.NavigateTo($"/Candidates/List/{PageCount}");
             return;
         }
 
         Candidates = await context.Candidates
-            .OrderByDescending(it => it.Id)
+            .OrderByDescending(it => it.Id) //Id에 따라 알파벳순 정렬
             .Skip(PageIndex * PageSize)
-            .Take(PageSize)
+            .Take(PageSize) //페이지에 4개씩만 표시
             .ToArrayAsync();
     }
 

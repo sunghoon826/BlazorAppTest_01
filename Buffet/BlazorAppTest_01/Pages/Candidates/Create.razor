@@ -1,14 +1,14 @@
 ﻿@page "/Candidates/Create"
 @inject IDbContextFactory<CandidateAppDbContext> _ContextFactory
 
-<PageTitle>Candidate Create</PageTitle>
+<PageTitle>Candidate Create</PageTitle>  @* Candidate List 페이지에서 Create New로 가는 링크 페이지 *@
 
 <h1>Create</h1>
 
 <h4>Candidate</h4>
 <hr />
 
-@if (!String.IsNullOrEmpty(StatusMessage))
+@if (!String.IsNullOrEmpty(StatusMessage)) // StatusMessage가 null이 아니면 html 메시지 출력
 {
     var statusMessageClass = StatusMessage.StartsWith("Error") ? "danger" : "success";
     <div class="alert alert-@statusMessageClass alert-dismissible" role="alert">
@@ -18,7 +18,7 @@
     </div>
 }
 
-<div class="row">
+<div class="row">  @*  MVC 스케폴딩으로 자동생성된 Create UI폼을 가져온 것 *@
     <div class="col-md-4">
         <BlazorAppTest_01.Pages.Candidates.Components.EditorForm Model="@Model" Busy="@Busy"
             OnSubmitCallback="@OnSubmitCallback"
@@ -36,7 +36,7 @@
 
     public string? StatusMessage { get; set; }
 
-    public bool Busy { get; set; }
+    public bool Busy { get; set; } // Create 하는동안 중복클릭과 중복생성을 막기위함.
 
     protected override void OnInitialized()
     {
@@ -55,15 +55,15 @@
 
         try
         {
-            if (Model is not null)
+            if (Model is not null) /* Candidate Model 클래스에 있는 모델 속성이 null이 아니면 */
             {
-                Model.Age = 0;
+                Model.Age = 0; // Db에 Add 하기전 초기화
 
-                using var ctx = _ContextFactory.CreateDbContext();
-                ctx.Candidates.Add(Model);
+                using var ctx = _ContextFactory.CreateDbContext(); //Db 생성
+                ctx.Candidates.Add(Model); // 현재 시점의 모델값을 넣음
                 await ctx.SaveChangesAsync();
                 // await Task.Delay(5000); 
-                Model = new() { IsEnrollment = Model.IsEnrollment }; 
+                Model = new() { IsEnrollment = Model.IsEnrollment }; // Create 이후에 박스에 입력된 값 초기화
 
                 StatusMessage = "Success";
             }
@@ -78,9 +78,9 @@
         }
     }
 
-    protected void HandleInvalidSubmit()
+    protected void HandleInvalidSubmit() //유효성이 통과되지 못했을때 처리기
     {
-        StatusMessage = ""; 
+        StatusMessage = "";  //유효성 검사 이후에 다시 Create 버튼만 눌렀을때 Success 메시지를 초기화 시킴
     }
 
     protected async Task OnSubmitCallback(bool isValid)

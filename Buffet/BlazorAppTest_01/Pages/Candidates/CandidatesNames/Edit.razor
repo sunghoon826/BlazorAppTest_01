@@ -25,7 +25,7 @@
     </div>
 }
 
-@if (Model is null && !Busy)
+@if (Model is null && !Busy)  //Busy를 bool로 선언하여 데이터가 들어오기 전에  Not Found 잠깐 보이는 것을 방지하기 위함
 {
     <div class="alert alert-danger alert-dismissible" role="alert">
         <button type="button" class="close" data-dismiss="alert"
@@ -62,7 +62,7 @@ else
 
     public string? StatusMessage { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnParametersSetAsync() // 파라미터(Id)가 세팅될때 모델을 채워줌
     {
         Busy = true;
 
@@ -73,13 +73,13 @@ else
         }
         finally
         {
-            Busy = false;            
+            Busy = false;              // try finally로 딜레이이를 둬서 페이지 로드 할때는 Not Found가 보이지 않게 한다.
         }
     }
 
     protected async Task OnSubmitCallback(bool isValid)
     {
-        if (Model is null || !isValid || Busy)
+        if (Model is null || !isValid || Busy)   
         {
             StatusMessage = "";
             return;
